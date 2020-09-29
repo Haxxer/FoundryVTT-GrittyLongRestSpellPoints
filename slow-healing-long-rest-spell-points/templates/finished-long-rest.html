@@ -1,0 +1,54 @@
+<form  id="finished-long-rest" class="dialog-content" style='max-width: 400px;'>
+  <p>You have finished a long rest, which meant you regained some abilities, hit dice, and possibly some spell points!</p>
+
+  <div class="form-group">
+      <div class="form-fields">
+          <select name="hd">
+              {{#select denomination}}
+              {{#each availableHD as |num denom|}}
+              <option value="{{denom}}">{{denom}} ({{num}} {{ localize "DND5E.available" }})</option>
+              {{/each}}
+              {{/select}}
+          </select>
+          <button style='flex:0 1 100px;' id="roll-hd" {{#unless canRoll}}disabled{{/unless}}>
+              <i class="fas fa-dice-d20"></i> {{ localize "Roll" }}
+          </button>
+      </div>
+      {{#unless canRoll}}
+      <p class="notes">{{ localize "DND5E.ShortRestNoHD" }}</p>
+      {{/unless}}
+  </div>
+
+  <p>Any unspent Hit Dice over your maximum hit dice will be lost.</p>
+
+  {{#if has_spells}}
+    <p>You have regained <strong>{{sp_total}} points</strong>. Each spell slot costs a number of points equal to its slot level. For example, regaining a 3rd level spell slot costs 3 spell points.</p>
+
+    {{#each spellSlots as |slots level|}}
+    <div class="form-group">
+        <div class="form-fields" style="justify-content: flex-start;">
+            <div style="margin-right:5px; flex:0 1 auto;">Level {{level}}: </div>
+            <div style="flex:0 1 auto;">
+            {{#each slots as |slot num|}}
+                {{#if slot}}
+                    <input type='checkbox' class="spend-spell-point" value="{{level}}">
+                {{else}}
+                    <input type='checkbox' disabled checked>
+                {{/if}}
+            {{/each}}
+            </div>
+        </div>
+    </div>
+    {{/each}}
+
+    <div style='margin:1rem 0;'>
+        You have <strong id='sp-left'>{{sp_left}}</strong> spell points remaining.
+    </div>
+  {{/if}}
+
+  <footer class="sheet-footer flexrow">
+    <button type="submit" name="submit">
+        <i class="fa fa-bed"></i> Finish Rest
+    </button>
+  </footer>
+</form>

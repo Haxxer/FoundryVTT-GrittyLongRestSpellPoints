@@ -1,0 +1,13 @@
+<form class="dialog-content" style='max-width: 300px;'>
+  <p>Take a long rest? At the end of a long rest will regain class resources, limited use item charges, regain half your maximum hit dice, which you can use to roll for Hit Points, and you will get some spell points to regain spell slots.</p>
+  <div class="form-group">
+      <label>Is New Day?</label>
+      <input type="checkbox" name="newDay" {{checked newDay}}/>
+      <p class="hint">Recover limited use abilities or items which recharge "at dawn" or "at dusk"?</p>
+  </div>
+  <footer class="sheet-footer flexrow">
+    <button type="submit" name="submit">
+        <i class="fa fa-bed"></i> Rest
+    </button>
+  </footer>
+</form>

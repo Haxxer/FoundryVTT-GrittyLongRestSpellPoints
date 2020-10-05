@@ -17,5 +17,5 @@ Spell point mediums are a new addition in 0.2.0. Consumable items can now have t
 
 ### How do set up a spell point medium item
 1. Create a new consumable item in someone's inventory
-2. Edit the consumable and under *Details*, set the *Consumable Type* "Spell Point Medium"
+2. Edit the consumable and under *Details*, set the *Consumable Type* to **Spell Point Medium**
 3. Add a 'damage' formula to it, so that the module knows what to roll with the medium

@@ -15,7 +15,7 @@ This slows the game down, and makes choosing which spell slots to regain a tacti
 
 Spell point mediums are a new addition in 0.2.0. Consumable items can now have the type "spell point medium", which have been added to the long rest UI. During a long rest, a character may spend the two hours of their rest pouring over notes, focusing on a mote of energy, praying over a piece of religious lore, etc, and regain some more spell points at the end of their long rest. The medium might be a one-off thing, or have multiple uses, it's really up to you as a DM.  It's another form of treasure that you can award your players!
 
-### How do set a spell point medium up
+### How do set up a spell point medium item
 1. Create a new consumable item in someone's inventory
 2. Edit the consumable and under *Details*, set the *Consumable Type* "Spell Point Medium"
 3. Add a 'damage' formula to it, so that the module knows what to roll with the medium

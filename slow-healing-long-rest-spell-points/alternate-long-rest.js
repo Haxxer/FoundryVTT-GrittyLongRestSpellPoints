@@ -1,9 +1,14 @@
 import Actor5e from "../../systems/dnd5e/module/actor/entity.js";
 import LongRestDialog from "./new-long-rest.js";
 import FinishedLongRestDialog from "./finished-long-rest.js";
+import { DND5E } from "../../systems/dnd5e/module/config.js";
 
 Hooks.on("init", () => {
+
     patch_longRest();
+
+    DND5E.consumableTypes['spellpoint'] = "Spell Point Medium";
+
 });
 
 function ordinal_suffix_of(i) {

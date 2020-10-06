@@ -4,36 +4,36 @@
   <div class="form-group">
       <div class="form-fields">
           <select name="hd">
-              {{#select denomination}}
-              {{#each availableHD as |num denom|}}
-              <option value="{{denom}}">{{denom}} ({{num}} {{ localize "DND5E.available" }})</option>
+              {{#select hd.denomination}}
+              {{#each hd.availableHD as |num denom|}}
+                <option value="{{denom}}">{{denom}} ({{num}} {{ localize "DND5E.available" }})</option>
               {{/each}}
               {{/select}}
           </select>
-          <button style='flex:0 1 100px;' id="roll-hd" {{#unless canRoll}}disabled{{/unless}}>
+          <button style='flex:0 1 100px;' id="roll-hd" {{#unless hd.canRoll}}disabled{{/unless}}>
               <i class="fas fa-dice-d20"></i> {{ localize "Roll" }}
           </button>
       </div>
-      {{#unless canRoll}}
+      {{#unless hd.canRoll}}
       <p class="notes">{{ localize "DND5E.ShortRestNoHD" }}</p>
       {{/unless}}
   </div>
 
   <p>Any unspent Hit Dice over your maximum hit dice will be lost.</p>
 
-  {{#if has_spells}}
-    <p>You have regained <strong>{{sp_total}} points</strong>. Each spell slot costs a number of points equal to its slot level. For example, regaining a 3rd level spell slot costs 3 spell points.</p>
+  {{#if spells.hasSpells}}
+    <p>You have regained <strong>{{spells.sp_total}} points</strong>. Each spell slot costs a number of points equal to its slot level. For example, regaining a 3rd level spell slot costs 3 spell points.</p>
 
-    {{#each spellSlots as |slots level|}}
+    {{#each spells.slots as |slots level|}}
     <div class="form-group">
         <div class="form-fields" style="justify-content: flex-start;">
             <div style="margin-right:5px; flex:0 1 auto;">Level {{level}}: </div>
             <div style="flex:0 1 auto;">
             {{#each slots as |slot num|}}
                 {{#if slot}}
-                    <input type='checkbox' class="spend-spell-point" value="{{level}}">
+                  <input type='checkbox' class="spend-spell-point" value="{{level}}">
                 {{else}}
-                    <input type='checkbox' disabled checked>
+                  <input type='checkbox' disabled checked>
                 {{/if}}
             {{/each}}
             </div>
@@ -42,8 +42,25 @@
     {{/each}}
 
     <div style='margin:1rem 0;'>
-        You have <strong id='sp-left'>{{sp_left}}</strong> spell points remaining.
+        You have <strong id='sp-left'>{{spells.sp_left}}</strong> spell points remaining.
     </div>
+
+    {{#if medium.hasMedium}}
+    <div style="margin-right:5px; flex:0 1 auto;">You have some medium that you can study during the long rest:</div>
+    <div class="form-group my-2">
+        <div class="form-fields">
+            <select name="medium">
+                {{#each medium.availableMedium as |data id|}}
+                <option value="{{ id }}" {{#unless data.quantity}}disabled{{/unless}}>{{ data.name }} ({{ data.formula }} | {{ data.quantity }} {{ localize "DND5E.available" }})</option>
+                {{/each}}
+            </select>
+            <button style='flex:0 1 100px;' id="roll-medium">
+                <i class="fas fa-dice-d20"></i> {{ localize "Roll" }}
+            </button>
+        </div>
+    </div>
+    {{/if}}
+
   {{/if}}
 
   <footer class="sheet-footer flexrow">

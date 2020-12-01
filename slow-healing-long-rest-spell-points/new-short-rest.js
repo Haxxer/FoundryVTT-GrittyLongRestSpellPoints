@@ -79,8 +79,9 @@ export default class newShortRestDialog extends Dialog {
 		}
 
 		let class_item = this.actor.items.find(i => i.type === "class" && i.name == "Wizard");
+		let item = this.actor.items.find(i => i.name.toLowerCase() === "arcane recovery");
 
-		if(class_item && class_item.data.data.levels > 1){
+		if(class_item && class_item.data.data.levels > 1 && item && item.data.data.uses.value != 0){
 
 			spell_data.class = "Wizard";
 

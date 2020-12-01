@@ -33,11 +33,7 @@ export default class FinishedLongRestDialog extends FormApplication {
 		return this._data;
 
 	}
-
-	update(rerender){
-
-	}
-
+	
 	get_hitdice(){
 
 		let hd = {}
@@ -144,12 +140,8 @@ export default class FinishedLongRestDialog extends FormApplication {
 		event.preventDefault();
 		const btn = event.currentTarget;
 		this._denom = btn.form.hd.value;
-		let dialog = this;
-		await this.actor.rollHitDie(this._denom).then(function(result){
-			if(result){
-				dialog.update_hd();
-			}
-		});
+		await this.actor.rollHitDie(this._denom, {dialog: false});
+		this.update_hd();
 	}
 
 
@@ -210,13 +202,12 @@ export default class FinishedLongRestDialog extends FormApplication {
 	 * @private
 	 */
 	update_hd(){
-
+		this._data.hd = this.get_hitdice();
 		for(let hd in this._data.hd.availableHD){
 			this._element.find(`option[value=${hd}]`).text(`${hd} (${this._data.hd.availableHD[hd]} ${game.i18n.localize("DND5E.available")})`);
 		}
 		this._data.hd.canRoll = this.actor.data.data.attributes.hd > 0;
 		this._element.find('#roll-hd').prop('disabled', !this._data.hd.canRoll);
-
 	}
 
 

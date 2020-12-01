@@ -5,12 +5,12 @@
   "systems": [
     "dnd5e"
   ],
-  "version": "0.3.0",
+  "version": "0.4.0",
   "author": "Wasp (Wasp#2005)",
   "esmodules": [
     "alternate-long-rest.js"
   ],
-  "minimumCoreVersion": "0.6.2",
+  "minimumCoreVersion": "0.7.7",
   "compatibleCoreVersion": "0.7.7",
   "url": "https://github.com/Haxxer/FoundryVTT-SlowHealingLongRestSpellPoints",
   "manifest": "https://raw.githubusercontent.com/Haxxer/FoundryVTT-SlowHealingLongRestSpellPoints/master/slow-healing-long-rest-spell-points/module.json",

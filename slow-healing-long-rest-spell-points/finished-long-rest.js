@@ -56,12 +56,20 @@ export default class FinishedLongRestDialog extends FormApplication {
 
 	get_spells(){
 
-		let spell_data = {}
+		let spell_data = {
+			hasSpells: false,
+			slots: {},
+			sp_total: 0,
+			sp_left: 0
+		}
 
-		let spellLevels = []
-		spell_data.slots = {}
-		// Recover spell slots
-		for (let [k, v] of Object.entries(this.actor.data.data.spells)) {
+		let missing_spells = Object.entries(this.actor.data.data.spells).filter(slot => slot[0] != "pact" && Number(slot[0].substr(5)) < 6 && slot[1].value != slot[1].max);
+
+		if(missing_spells.length != 0){
+
+			let spellLevels = []
+			// Recover spell slots
+			for (let [k, v] of Object.entries(this.actor.data.data.spells)) {
 				if((!v.max && !v.override) || k == "pact"){
 						continue;
 				}
@@ -71,18 +79,20 @@ export default class FinishedLongRestDialog extends FormApplication {
 				for(let i = 0; i < v.max; i++){
 					spell_data.slots[level].push(i >= v.value)
 				}
+			}
+
+			let highest_spell_slot = 0;
+			if(spellLevels.length){
+				highest_spell_slot = Math.max(...spellLevels)
+			}
+
+			let spell_points = highest_spell_slot*2 + this._extra_sp;
+
+			spell_data.hasSpells = spell_points > 0;
+			spell_data.sp_total = spell_points;
+			spell_data.sp_left = spell_points;
+
 		}
-
-		let highest_spell_slot = 0;
-		if(spellLevels.length){
-			highest_spell_slot = Math.max(...spellLevels)
-		}
-
-		let spell_points = highest_spell_slot*2 + this._extra_sp;
-
-		spell_data.hasSpells = spell_points > 0;
-		spell_data.sp_total = spell_points;
-		spell_data.sp_left = spell_points;
 
 		return spell_data;
 
@@ -103,7 +113,6 @@ export default class FinishedLongRestDialog extends FormApplication {
 						'formula': d.formula,
 						'quantity': d.quantity
 					}
-					console.log(medium_data, d.quantity)
 					medium_data.hasMedium = medium_data.hasMedium || d.quantity > 0;
 				}
 			}
@@ -140,7 +149,7 @@ export default class FinishedLongRestDialog extends FormApplication {
 		event.preventDefault();
 		const btn = event.currentTarget;
 		this._denom = btn.form.hd.value;
-		await this.actor.rollHitDie(this._denom, {dialog: false});
+		await this.actor.rollHitDie(this._denom, {dialog: !game.settings.get("slow-healing-long-rest-spell-points", "quickHDRoll")});
 		this.update_hd();
 	}
 
